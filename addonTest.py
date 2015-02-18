@@ -157,7 +157,6 @@ class DicoWidget(QWidget):
 	def definitionView(self):
 		selectedCard = self.getSelection()
 		card = self.renderView(selectedCard).__str__()
-		print card
 		self.tDefinition.setHtml(card)
 
 	def addDefinition(self):

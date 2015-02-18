@@ -29,7 +29,7 @@
 
 		<br/>
 		<xsl:for-each select="def/ex">
-			"<xsl:value-of select="ex_orig"/>" (<i><xsl:value-of select="ex_transl"/></i>)
+			"<xsl:value-of select="ex_orig" disable-output-escaping="yes"/>" (<i><xsl:value-of select="ex_transl" disable-output-escaping="yes"/></i>)
 			<br/>
 		</xsl:for-each> 
 	</html>
