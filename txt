@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<lkj>
+  <ar>
+    <k>à</k>
+    <def>
+      <gr>pp</gr>
+      <dtrn>to</dtrn>
+      <tr/>
+      <ex type="exm">
+        <ex_orig>2 à 3 meter</ex_orig>
+        <ex_transl>2 to 3 metres</ex_transl>
+      </ex>
+      <def>till</def>
+    </def>
+  </ar>
+  <ar>
+    <k>accelerera</k>
+    <def>
+      <gr>vb</gr>
+      <gr>accelererade</gr>
+      <gr>accelererat</gr>
+      <gr>accelerera</gr>
+      <gr>accelererar</gr>
+      <dtrn>accelerate</dtrn>
+      <tr/>
+      <sr>
+        <kref type="syn">öka</kref>
+      </sr>
+      <def>öka hastigheten</def>
+    </def>
+  </ar>
+</lkj>
+<?xml version="1.0"?>
+<lkj>
+  <ar>
+    <k>à</k>
+    <def cmt="i sifferuttryck">
+      <gr>pp</gr>
+      <dtrn>to</dtrn>
+      <tr/>
+      <ex type="exm">
+        <ex_orig>2 à 3 meter</ex_orig>
+        <ex_transl>2 to 3 metres</ex_transl>
+      </ex>
+      <def>till</def>
+    </def>
+  </ar>
+  <ar>
+    <k>accelerera</k>
+    <def cmt="">
+      <gr>vb</gr>
+      <gr>accelererade</gr>
+      <gr>accelererat</gr>
+      <gr>accelerera</gr>
+      <gr>accelererar</gr>
+      <dtrn>accelerate</dtrn>
+      <tr/>
+      <sr>
+        <kref type="syn">öka</kref>
+      </sr>
+      <def>öka hastigheten</def>
+    </def>
+  </ar>
+</lkj>

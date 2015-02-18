@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dictionary>
+<word class="pp" comment="i sifferuttryck" lang="sv" value="à"><translation comment="in numerical expressions" value="to" />
+<phonetic soundFile="à.swf" value="a" />
+<see type="saldo" value="à||à..1||à..pp.1" />
+<example value="2 à 3 meter"><translation value="2 to 3 metres" />
+</example>
+<definition value="till" />
+</word>
+
+<word class="vb" lang="sv" value="accelerera"><translation value="accelerate" />
+<phonetic soundFile="accelererar.swf" value="akselerE:rar" />
+<paradigm><inflection value="accelererade" />
+<inflection value="accelererat" />
+<inflection value="accelerera" />
+<inflection value="accelererar" />
+</paradigm>
+<synonym level="5.0" value="öka" />
+<see type="saldo" value="accelerera||accelerera..1||accelerera..vb.1" />
+<see type="saldo" value="accelerera||accelerera..2||accelerera..vb.2" />
+<derivation inflection="accelerationen" value="acceleration"><translation value="acceleration" />
+</derivation>
+<definition value="öka hastigheten"><translation value="increase speed" />
+</definition>
+<grammar value="A/x &amp;" />
+</word>
+</dictionary>
