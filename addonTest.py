@@ -65,7 +65,7 @@ class DicoWidget(QWidget):
 		box.addWidget(self.listResult,2,0,4,1)
 
 		# Definition panel
-		self.tDefinition = QPlainTextEdit()
+		self.tDefinition = QTextEdit()
 		self.tDefinition.document().setMetaInformation( QTextDocument.DocumentUrl, self.path + "/" )
 		box.addWidget(self.tDefinition,2,1,4,4)
 
@@ -158,7 +158,7 @@ class DicoWidget(QWidget):
 		selectedCard = self.getSelection()
 		card = self.renderView(selectedCard).__str__()
 		print card
-		self.tDefinition.appendHtml(card)
+		self.tDefinition.setHtml(card)
 
 	def addDefinition(self):
 		selectedCard = self.getSelection()
