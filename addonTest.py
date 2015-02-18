@@ -67,6 +67,7 @@ class DicoWidget(QWidget):
 		# Definition panel
 		self.tDefinition = QTextEdit()
 		self.tDefinition.document().setMetaInformation( QTextDocument.DocumentUrl, self.path + "/" )
+		self.tDefinition.setReadOnly(True)
 		box.addWidget(self.tDefinition,2,1,4,4)
 
 		# self.bAdd = QPushButton('Add')

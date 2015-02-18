@@ -5,9 +5,11 @@
 		<b>
 		<xsl:value-of select="k"/>
 		</b>
-		(<i>
-		<xsl:value-of select="def/gr[@type='class']"/>
-		</i>)
+		<xsl:if test="def/gr[@type='class']/text() != ''">
+			(<i>
+			<xsl:value-of select="def/gr[@type='class']"/>
+			</i>)
+		</xsl:if>
 		<xsl:for-each select="def/gr[@type='inflection']">
 			<xsl:choose>
 				<xsl:when test="not(position() = last())"><xsl:value-of select="text()"/>
@@ -29,8 +31,9 @@
 
 		<br/>
 		<xsl:for-each select="def/ex">
-			"<xsl:value-of select="ex_orig" disable-output-escaping="yes"/>" (<i><xsl:value-of select="ex_transl" disable-output-escaping="yes"/></i>)
 			<br/>
+			"<xsl:value-of select="ex_orig" disable-output-escaping="yes"/>" 
+			(<i><xsl:value-of select="ex_transl" disable-output-escaping="yes"/></i>)
 		</xsl:for-each> 
 	</html>
 </xsl:template>
