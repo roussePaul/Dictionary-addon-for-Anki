@@ -7,12 +7,11 @@ from aqt.qt import *
 import aqt.editor, aqt.modelchooser, aqt.deckchooser
 from anki.importing import TextImporter
 import sys, os, traceback
+import subprocess
 
 import dictionary
 
-from lxml import etree
-import libxml2
-
+import xslt
 
 # We're going to add a menu item below. First we want to create a function to
 # be called when the menu item is activated.
@@ -32,7 +31,6 @@ class DefinitionList(QListWidget):
 				super(QListWidget, self).keyPressEvent(event)
 		else:
 			super(QListWidget, self).keyPressEvent(event)
-
 
 class DicoWidget(QWidget):
 
@@ -210,17 +208,15 @@ class DicoWidget(QWidget):
 		self.mw.reset()
 
 	def initRenderCard(self):
-		styledoc = etree.parse(self.path + "/config/styleCard.xsl")
-		self.style = etree.XSLT(styledoc)
-		styledoc = etree.parse(self.path + "/config/styleView.xsl")
-		self.styleView = etree.XSLT(styledoc)
+        self.xsltView = XSLT(self.path + '/config/styleView.xsl')
+        self.xsltCard = XSLT(self.path + '/config/styleCard.xsl')
 
 	def renderCard(self,data):
-		result = self.style(etree.XML(data["xml"].__str__()))
+		result = self.xsltCard.apply(data["xml"].__str__())
 		return result
 
 	def renderView(self,data):
-		result = self.styleView(etree.XML(data["xml"].__str__()))
+		result = self.xsltView.apply(data["xml"].__str__())
 		return result
 
 	def close(self):
@@ -237,9 +233,6 @@ class DicoWidget(QWidget):
 		if isWin:
 			dir = dir.encode(sys.getfilesystemencoding())
 		return dir
-
-
-
 
 
 

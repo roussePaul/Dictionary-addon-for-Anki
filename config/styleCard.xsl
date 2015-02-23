@@ -23,6 +23,14 @@
 		</xsl:for-each>
 		<xsl:text>)</xsl:text>
 	</xsl:if>
+	<!-- <xsl:text>&#x9;</xsl:text>
+	<xsl:for-each select="def/ex">
+		<xsl:text>&lt;br/&gt;"</xsl:text>
+		<xsl:value-of select="ex_orig" disable-output-escaping="no"/>
+		<xsl:text>" (&lt;i&gt;</xsl:text>
+		<xsl:value-of select="ex_transl" disable-output-escaping="no"/>
+		<xsl:text>&lt;/i&gt;)</xsl:text>
+	</xsl:for-each>  -->
 </xsl:template>
 
 </xsl:stylesheet>
