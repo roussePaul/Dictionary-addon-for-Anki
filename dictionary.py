@@ -1,4 +1,4 @@
-import libxml2
+import xml.etree.ElementTree as ET
 import requests
 import json
 from xml.dom.minidom import parse, parseString
@@ -7,56 +7,52 @@ class Dictionary:
 	def __init__(self,path):
 		self.path = path
 		# Load dictionaries
-		self.doc_en_sv = libxml2.parseFile(self.path + "/dict/en_sv.xdxf")
-		self.en_sv = self.doc_en_sv.xpathNewContext()
-		self.doc_sv_en = libxml2.parseFile(self.path + "/dict/sv_en.xdxf")
-		self.sv_en = self.doc_sv_en.xpathNewContext()
-		self.lang_en_sv = self.en_sv.xpathEval('/xdxf/@lang_from')[0].content
-		self.lang_sv_en = self.sv_en.xpathEval('/xdxf/@lang_from')[0].content
+		self.dict_en_sv_path = self.path + "/dict/en_sv.xdxf"
+		self.doc_en_sv = ET.parse(self.dict_en_sv_path)
+		self.en_sv = self.doc_en_sv.getroot()
+		self.en_sv_elements = self.doc_en_sv.findall(".//k/..")
+		self.lang_en_sv = self.en_sv.attrib["lang_from"]
+
+		self.dict_sv_en_path = self.path + "/dict/sv_en.xdxf"
+		self.doc_sv_en = ET.parse(self.dict_sv_en_path)
+		self.sv_en = self.doc_en_sv.getroot()
+		self.sv_en_elements = self.doc_en_sv.findall(".//k/..")
+		self.lang_sv_en = self.sv_en.attrib["lang_from"]
 
 	def __del__(self):
-		self.doc_en_sv.freeDoc()
-		self.doc_sv_en.freeDoc()
+		pass
 
-	def queryDict(self,request,dico,lg):
+	def queryDict(self,name,elements,dico):
 		dicoResult = [];
-		result = dico.xpathEval(request)
+		result = [x for x in elements if x.findtext('.//k') == name]
 		for l in result:
-			dicoResult.append(self.getObject(l,dico,lg))
+			dicoResult.append(self.getObject(l,dico))
 		return dicoResult
 
 	def query(self, name):
 
-		request = '//k[text()="'+name+'"]/..'
-		d1 = self.queryDict(request,self.en_sv,self.lang_en_sv)
-		d2 = self.queryDict(request,self.sv_en,self.lang_en_sv)
+		d1 = self.queryDict(name,self.en_sv_elements,self.sv_en)
+		d2 = self.queryDict(name,self.sv_en_elements,self.en_sv)
 
 		return d1+d2
 
 	def getAllWords(self):
-		return self.getAllWordsFromDict(self.en_sv) + self.getAllWordsFromDict(self.sv_en)
+		return self.getAllWordsFromDict(self.en_sv_elements) + self.getAllWordsFromDict(self.sv_en_elements)
 
 
-	def getAllWordsFromDict(self,dico):
-		request = '//k/text()'
-		result = dico.xpathEval(request)
-		return [r.content for r in result]
+	def getAllWordsFromDict(self,elements):
+		result =  [x.findtext('.//k') for x in elements]
+		return result
 
-	def getObject(self, xml, doc,lg):
+	def getObject(self, node, doc):
 		dico = {}
-		dico["lang_from"] = doc.xpathEval('/xdxf/@lang_from')[0].content
-		dico["lang_to"] = doc.xpathEval('/xdxf/@lang_to')[0].content
-		root = doc.setContextNode(xml)
-		dico["k"] = doc.xpathEval('k')[0].content
-		gr = doc.xpathEval('def/gr')
-		if len(gr):
-			dico["gr"] = doc.xpathEval('def/gr')[0].content
-		listDtrn =  doc.xpathEval('def/dtrn')
-		dico["dtrn"] = [l.content for l in listDtrn]
-		dico["xml"] = xml
-		# listExOrig =  doc.xpathEval('def/ex/ex_orig')
-		# listExTran =  doc.xpathEval('def/ex/ex_transl')
-		# dico["ex"] = [[o.content,t.content] for o,t in zip(listExOrig,listExTran)]
+		dico["lang_from"] = doc.attrib["lang_from"]
+		dico["lang_to"] = doc.attrib["lang_to"]
+		dico["xml"] = ET.tostring(node)
+
+		dico["k"] = node.findtext('.//k')
+		dico["gr"] = node.findtext('.//def/gr')
+		dico["dtrn"] = [l.text for l in node.findall('.//def/dtrn')]
 		return dico
 
 

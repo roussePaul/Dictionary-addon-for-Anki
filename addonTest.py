@@ -11,7 +11,7 @@ import subprocess
 
 import dictionary
 
-import xslt
+from xslt import *
 
 # We're going to add a menu item below. First we want to create a function to
 # be called when the menu item is activated.
@@ -208,8 +208,8 @@ class DicoWidget(QWidget):
 		self.mw.reset()
 
 	def initRenderCard(self):
-        self.xsltView = XSLT(self.path + '/config/styleView.xsl')
-        self.xsltCard = XSLT(self.path + '/config/styleCard.xsl')
+		self.xsltView = XSLT(self.path + '/config/styleView.xsl')
+		self.xsltCard = XSLT(self.path + '/config/styleCard.xsl')
 
 	def renderCard(self,data):
 		result = self.xsltCard.apply(data["xml"].__str__())
