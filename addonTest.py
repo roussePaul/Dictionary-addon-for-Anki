@@ -47,6 +47,7 @@ class DicoWidget(QWidget):
 		# initialisation
 		self.mw = mw
 		self.path = self.addonsFolder()
+		self.initRenderCard()
 		
 		# Query widget
 		self.countLabel = QLCDNumber()
@@ -98,7 +99,6 @@ class DicoWidget(QWidget):
 		self.dico = dictionary.Dictionary(self.path)
 
 		self.initSuggestion()
-		self.initRenderCard()
 
 	def initTempFile(self):
 		## Temp file for new words
@@ -155,16 +155,16 @@ class DicoWidget(QWidget):
 
 	def definitionView(self):
 		selectedCard = self.getSelection()
-		card = self.renderView(selectedCard).__str__()
-		self.tDefinition.setHtml(card)
+		card = self.renderView(selectedCard)
+		self.tDefinition.setHtml(card.encode("UTF-16LE"))
 
 	def addDefinition(self):
 		selectedCard = self.getSelection()
-		card = self.renderCard(selectedCard).__str__()
-		self.file.write(card+ "\n")
+		card = self.renderCard(selectedCard)
+		self.file.write(card.encode("UTF-8")+ "\n")
 		self.nbreAdded = self.nbreAdded + 1
 		self.countLabel.display(str(self.nbreAdded))
-		tooltip(_(card.decode("UTF-8") + " added"), period=1000)
+		tooltip(_(card + " added"), period=1000)
 
 	def gotoQuery(self,event=None):
 		self.tQuery.setFocus()
@@ -208,15 +208,15 @@ class DicoWidget(QWidget):
 		self.mw.reset()
 
 	def initRenderCard(self):
-		self.xsltView = XSLT(self.path + '/config/styleView.xsl')
-		self.xsltCard = XSLT(self.path + '/config/styleCard.xsl')
+		self.xsltView = XSLT(self.path,self.path + '/config/styleView.xsl')
+		self.xsltCard = XSLT(self.path,self.path + '/config/styleCard.xsl')
 
 	def renderCard(self,data):
-		result = self.xsltCard.apply(data["xml"].__str__())
+		result = self.xsltCard.apply(data["xml"])
 		return result
 
 	def renderView(self,data):
-		result = self.xsltView.apply(data["xml"].__str__())
+		result = self.xsltView.apply(data["xml"])
 		return result
 
 	def close(self):
